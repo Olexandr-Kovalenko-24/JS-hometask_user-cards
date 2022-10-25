@@ -1,0 +1,50 @@
+body {
+    margin: 0 auto;
+}
+
+.wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: azure;
+}
+
+.card {
+    width: 250px;
+    height: 300px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid cornflowerblue;
+    border-radius: 20px;
+    margin: 20px;
+}
+
+.userName {
+    font-size: 20px;
+    font-weight: 800;
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+.discription {
+    line-height: 1.5em;
+    margin-bottom: 25px;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.connect {
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid cornflowerblue;
+    background-color: cornflowerblue;
+    color: white;
+}
