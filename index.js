@@ -57,7 +57,12 @@ root.append(wrapper);
 
 function createCard(arrayOfUserData){
     const card = document.createElement('section');
-    card.classList.add('card');
+    card.classList.add('card', 'mouse-off');
+    card.addEventListener('click', toggle);
+    function toggle(){
+        card.classList.toggle('mouse-off');
+        card.classList.toggle('mouse-on');
+    };
     const userName = document.createElement('h1');
     userName.classList.add('userName');
     userName.textContent = arrayOfUserData.name;
@@ -77,3 +82,4 @@ function createCard(arrayOfUserData){
 const usersArray = userData.map(createCard);
 
 wrapper.append(...usersArray);
+
