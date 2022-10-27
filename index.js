@@ -55,14 +55,9 @@ const wrapper = document.createElement('main');
 wrapper.classList.add('wrapper');
 root.append(wrapper);
 
-function createCard(arrayOfUserData){
+function createCard(arrayOfUserData) {
     const card = document.createElement('section');
-    card.classList.add('card', 'mouse-off');
-    card.addEventListener('click', toggle);
-    function toggle(){
-        card.classList.toggle('mouse-off');
-        card.classList.toggle('mouse-on');
-    };
+    card.classList.add('card');
     const userName = document.createElement('h1');
     userName.classList.add('userName');
     userName.textContent = arrayOfUserData.name;
@@ -70,7 +65,7 @@ function createCard(arrayOfUserData){
     description.classList.add('discription');
     description.textContent = arrayOfUserData.description;
     const avatar = document.createElement('img');
-    avatar.setAttribute('src', arrayOfUserData.profilePicture)   
+    avatar.setAttribute('src', arrayOfUserData.profilePicture)
     avatar.classList.add('avatar');
     const connect = document.createElement('button');
     connect.classList.add('connect');
@@ -80,6 +75,18 @@ function createCard(arrayOfUserData){
 }
 
 const usersArray = userData.map(createCard);
+
+
+for (let i = 0; i < usersArray.length; i++) {
+    usersArray[i].addEventListener("click", function () {
+        let current = document.getElementsByClassName("active");
+        if (current.length > 0) {
+            current[0].className = current[0].className.replace(" active", "");
+        }
+        this.className += " active";
+    });
+}
+
 
 wrapper.append(...usersArray);
 
