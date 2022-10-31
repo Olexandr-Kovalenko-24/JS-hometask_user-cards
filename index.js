@@ -5,17 +5,18 @@ const wrapper = document.createElement('main');
 wrapper.classList.add('wrapper');
 root.append(wrapper);
 
-function createCard(arrayOfUserData) {
+function createCard(User) {
     const card = document.createElement('section');
     card.classList.add('card');
     const userName = document.createElement('h1');
     userName.classList.add('userName');
-    userName.textContent = arrayOfUserData.name;
+    userName.textContent = User.name;
     const description = document.createElement('p');
     description.classList.add('discription');
-    description.textContent = arrayOfUserData.description;
+    description.textContent = User.description;
     const avatar = document.createElement('img');
-    avatar.setAttribute('src', arrayOfUserData.profilePicture)
+    avatar.setAttribute('src', User.profilePicture)
+    avatar.setAttribute('alt', User.name);
     avatar.classList.add('avatar');
     const connect = document.createElement('button');
     connect.classList.add('connect');
