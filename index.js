@@ -1,43 +1,91 @@
 const root = document.querySelector('#root');
 
+const usersCardArray = userData.map(user => createUserCard(user));
 
-const wrapper = document.createElement('main');
-wrapper.classList.add('wrapper');
-root.append(wrapper);
+root.append(...usersCardArray);
 
-function createCard(User) {
-    const card = document.createElement('section');
-    card.classList.add('card');
-    const userName = document.createElement('h1');
-    userName.classList.add('userName');
-    userName.textContent = User.name;
-    const description = document.createElement('p');
-    description.classList.add('discription');
-    description.textContent = User.description;
+function createUserCard(user) {
+    const imageWrapper = createImageWrapper(user);
+    const userName = createElement('h2', { classNames: ['userName'] }, user.name);
+    const description = createElement('p', { classNames: ['description'] }, user.description);
+    const connectButton = createElement('button', { classNames: ['connectButton'] }, 'Connect');
+    const wrapper = createElement('section', { classNames: ['card-wrapper'] }, imageWrapper, userName, description, connectButton);
+    wrapper.addEventListener('click', getActiveCard);
+    return wrapper;
+}
+
+/**
+ * 
+ * @param {String} type 
+ * @param {Object} options
+ * @param {String[]} options.className 
+ * @param  {Node} children 
+ */
+
+
+function createElement(type, { classNames = [] }, ...children) {
+    const elem = document.createElement(type);
+    elem.classList.add(...classNames);
+    elem.append(...children);
+    return elem;
+}
+
+function createImageWrapper(user) {
+    const imageWrapper = createElement('div', { classNames: ['image-wrapper'] }, user.name[0])
+    const color = stringToColor(user.name);
+    imageWrapper.style.backgroundColor = color;
+    imageWrapper.setAttribute('id', `wrapper-${user.id}`);
+    const avatar = createImage(user);
+    return imageWrapper;
+}
+
+function createImage(user) {
     const avatar = document.createElement('img');
-    avatar.setAttribute('src', User.profilePicture)
-    avatar.setAttribute('alt', User.name);
+    avatar.setAttribute('src', user.profilePicture);
+    avatar.setAttribute('alt', user.name);
+    avatar.dataset.id = user.id;
     avatar.classList.add('avatar');
-    const connect = document.createElement('button');
-    connect.classList.add('connect');
-    connect.textContent = 'Connect'
-    card.append(avatar, userName, description, connect);
-    return card;
+
+    avatar.addEventListener('load', imageLoadHandler);
+    avatar.addEventListener('error', imageErrorHandler);
+
+    return avatar;
 }
 
-const usersArray = userData.map(createCard);
+function imageLoadHandler({ target }) {
+    const parentWrapper = document.querySelector((`#wrapper-${target.dataset.id}`));
+    parentWrapper.append(target);
+}
 
-
-for (let i = 0; i < usersArray.length; i++) {
-    usersArray[i].addEventListener("click", function () {
-        let current = document.getElementsByClassName("active");
-        if (current.length > 0) {
-            current[0].className = current[0].className.replace(" active", "");
-        }
-        this.className += " active";
-    });
+function imageErrorHandler(event) {
+    event.target.remove();
 }
 
 
-wrapper.append(...usersArray);
+function getActiveCard(event) {
+    const activeCard = document.querySelector('.active');
+    if (activeCard === event.currentTarget) {
+        return;
+    }
+    if (activeCard) {
+        activeCard.classList.remove('active');
+    }
+    event.currentTarget.classList.add('active');
+}
 
+
+/* UTILITS */
+
+
+function stringToColor (str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    let colour = '#';
+    for (let i = 0; i < 3; i++) {
+      let value = (hash >> (i * 8)) & 0xFF;
+      colour += value.toString(16);
+    }
+    return colour.substring(0, 7);
+  }

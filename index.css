@@ -1,24 +1,21 @@
-body {
-    margin: 0 auto;
-}
-
-.wrapper {
+#root {
     display: flex;
+    width: 100%;
     flex-wrap: wrap;
-    background-color: azure;
 }
 
-.card {
+.card-wrapper {
     width: 250px;
     height: 300px;
-    background-color: white;
+    background-color: rgba(135, 207, 235, 0.267);
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     border-radius: 20px;
     margin: 20px;
     border: 3px solid cornflowerblue;
+    overflow: hidden;
 }
 
 .userName {
@@ -31,16 +28,37 @@ body {
 .discription {
     line-height: 1.5em;
     margin-bottom: 25px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.image-wrapper {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    object-fit: cover;
+    font-size: 5em;
+    color: white;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.connect {
+.connectButton {
     width: 100px;
     height: 30px;
     border-radius: 10px;
